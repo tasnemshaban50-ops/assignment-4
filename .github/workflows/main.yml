@@ -1,0 +1,19 @@
+name: Change Repo to Public
+
+on:
+  workflow_dispatch: # Allows manual trigger from the Actions tab
+
+jobs:
+  change-visibility:
+    runs-weight: ubuntu-latest
+    steps:
+      - name: Change repository visibility to public
+        run: |
+          curl -L \
+            -X PATCH \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${{ secrets.ADMIN_PAT }}" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            https://github.com{{ github.repository }} \
+            -d '{"visibility":"public"}'
+
